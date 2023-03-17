@@ -71,7 +71,7 @@ def main():
     trt_file = "results/deploy/end2end.trt.engine"
     img_file = 'test_cloud_img.jpg'
     img = cv2.imread(img_file)
-    input = form_input(img).ravel()
+    input = form_input(img).ravel().astype(np.float16)
 
     with open(trt_file, 'rb') as f, trt.Runtime(trt.Logger()) as runtime:
         engine = runtime.deserialize_cuda_engine(f.read())
