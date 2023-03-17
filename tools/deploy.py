@@ -51,7 +51,7 @@ def parse_args():
         default='INFO',
         choices=list(logging._nameToLevel.keys()))
     parser.add_argument(
-        '--show', action='store_true', default=False, help='Show detection outputs')
+        '--show', action='store_true', default=True, help='Show detection outputs')
     parser.add_argument(
         '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
@@ -288,8 +288,8 @@ def main():
         f'visualize {backend.value} model',
         target=visualize_model,
         args=(model_cfg_path, deploy_cfg_path, backend_files, args.test_img,
-              # args.device,
-              'cpu'
+              args.device,
+              # 'cpu'
               ),
         kwargs=extra,
         ret_value=ret_value)
