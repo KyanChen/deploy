@@ -24,7 +24,7 @@ from mmdeploy.utils import (IR, Backend, get_backend, get_calib_filename,
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Export model to backends.')
-    parser.add_argument('--deploy_cfg', default='../configs/mmseg/segmentation_tensorrt-fp16_static-512x512.py', help='deploy config path')
+    parser.add_argument('--deploy_cfg', default='../configs/mmseg/segmentation_onnxruntime_static-512x512.py', help='deploy config path')
     parser.add_argument('--model_cfg', default='../my_config/segformer_mit-b0_512x512_160k_cloud.py', help='model config path')
     parser.add_argument('--checkpoint', default='../pretrain/cloud_snow.pth',  help='model checkpoint path')
     parser.add_argument('--img', default='test_cloud_img.jpg', help='image used to convert model model')
