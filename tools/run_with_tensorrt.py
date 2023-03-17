@@ -21,11 +21,12 @@ def parse_args():
 
 
 def get_palette(num_classes=3):
-    state = np.random.get_state()
-    # random color
-    np.random.seed(42)
-    palette = np.random.randint(0, 256, size=(num_classes, 3))
-    np.random.set_state(state)
+    # state = np.random.get_state()
+    # # random color
+    # np.random.seed(42)
+    # palette = np.random.randint(0, 256, size=(num_classes, 3))
+    # np.random.set_state(state)
+    palette = [[0, 0, 0], [0, 0, 255], [0, 255, 0]]
     return [tuple(c) for c in palette]
 
 
@@ -37,10 +38,11 @@ def main():
     segmentor = Segmentor(
         model_path=args.model_path, device_name=args.device_name, device_id=0)
     time_t = 0
-    for i in range(100):
+    for i in range(20):
         t_s = time.time()
         seg = segmentor(img)
         time_t += time.time() - t_s
+    print(time_t / 20)
 
     if seg.dtype == np.float32:
         seg = np.argmax(seg, axis=0)
@@ -52,7 +54,7 @@ def main():
     # convert to BGR
     color_seg = color_seg[..., ::-1]
 
-    img = img * 0.5 + color_seg * 0.5
+    img = img * 0.2 + color_seg * 0.8
     img = img.astype(np.uint8)
     cv2.imwrite('output_segmentation.png', img)
 
