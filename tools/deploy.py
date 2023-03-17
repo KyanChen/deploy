@@ -44,7 +44,7 @@ def parse_args():
               'specified, it will use "val" dataset in model config instead.'),
         default=None)
     parser.add_argument(
-        '--device', help='device used for conversion', default='cuda')
+        '--device', help='device used for conversion', default='cuda:0')
     parser.add_argument(
         '--log-level',
         help='set log level',
@@ -56,10 +56,10 @@ def parse_args():
         '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
         '--quant-image-dir',
-        default='results/trtdeployfull',
+        default=None,
         help='Image directory for quantize model.')
     parser.add_argument(
-        '--quant', action='store_true', help='Quantize model to low bit.')
+        '--quant', action='store_true', default=False, help='Quantize model to low bit.')
     parser.add_argument(
         '--uri',
         default='192.168.1.1:60000',
