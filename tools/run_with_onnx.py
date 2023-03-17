@@ -37,8 +37,7 @@ for i in range(1):
     time_t += time.time() - t_s
 print(time_t / 20)
 seg = outs[0][0][0]
-import pdb
-pdb.set_trace()
+
 palette = get_palette()
 color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
 for label, color in enumerate(palette):
