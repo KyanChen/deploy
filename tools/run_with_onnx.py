@@ -36,7 +36,7 @@ for i in range(1):
 
     time_t += time.time() - t_s
 print(time_t / 20)
-seg = outs[0]
+seg = outs[0][0][0]
 import pdb
 pdb.set_trace()
 palette = get_palette()
