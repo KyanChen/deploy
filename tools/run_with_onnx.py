@@ -29,7 +29,7 @@ onet_session = onnxruntime.InferenceSession(o_model_path)
 img = cv2.imread(img_file)
 
 time_t = 0
-for i in range(5):
+for i in range(1):
     t_s = time.time()
     inputs = {onet_session.get_inputs()[0].name: form_input(img)}
     outs = onet_session.run(None, inputs)
