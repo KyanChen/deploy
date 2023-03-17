@@ -44,7 +44,7 @@ for label, color in enumerate(palette):
     color_seg[seg == label, :] = color
 # convert to BGR
 color_seg = color_seg[..., ::-1]
-img = cv2.resize(img, (512, 512))[:, :, ::-1]
+img = cv2.resize(img, (512, 512))
 img = img * 0.2 + color_seg * 0.8
 img = img.astype(np.uint8)
 cv2.imwrite('output_segmentation_onnx.png', img)
