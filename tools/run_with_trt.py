@@ -3,6 +3,7 @@ import pycuda.autoinit  #负责数据初始化，内存管理，销毁等
 import pycuda.driver as cuda  #GPU CPU之间的数据传输
 import numpy as np
 import cv2
+import tensorrt as trt
 
 
 def form_input(img):
@@ -21,15 +22,6 @@ def get_palette(num_classes=3):
     palette = [[0, 0, 0], [0, 0, 255], [0, 255, 0]]
     return [tuple(c) for c in palette]
 
-model_path = "E:/project/Template_detection/pytorch_net/test_model.onnx"
-img_file = 'test_cloud_img.jpg'
-
-
-import tensorrt as trt
-logger = trt.Logger(trt.Logger.WARNING)
-builder = trt.Builder(logger)
-
-network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
 
 class HostDeviceMem(object):
     def __init__(self, host_mem, device_mem):
@@ -75,8 +67,10 @@ def do_inference(context, bindings, inputs, outputs, stream, batch_size=1):
     return [out.host for out in outputs]
 
 
-def main(input, trt_file):
-    trt_file = model_path
+def main():
+    trt_file = "results/deploy/end2end.trt.engine"
+    img_file = 'test_cloud_img.jpg'
+    img = cv2.imread(img_file)
     input = form_input(img)
 
     with open(trt_file, 'rb') as f, trt.Runtime(trt.Logger()) as runtime:
@@ -93,29 +87,26 @@ def main(input, trt_file):
     import pdb
     pdb.set_trace()
 
+    # time_t = 0
+    # for i in range(20):
+    #     t_s = time.time()
+    #     inputs = {onet_session.get_inputs()[0].name: form_input(img)}
+    #     outs = onet_session.run(None, inputs)
+    #
+    #     time_t += time.time() - t_s
+    # print(time_t / 20)
+    # seg = outs[0]
+    #
+    # palette = get_palette()
+    # color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
+    # for label, color in enumerate(palette):
+    #     color_seg[seg == label, :] = color
+    # # convert to BGR
+    # color_seg = color_seg[..., ::-1]
+    #
+    # img = img * 0.2 + color_seg * 0.8
+    # img = img.astype(np.uint8)
+    # cv2.imwrite('output_segmentation_onnx.png', img)
 
-
-    onet_session = onnxruntime.InferenceSession(o_model_path)
-
-    img = cv2.imread(img_file)
-
-    time_t = 0
-    for i in range(20):
-        t_s = time.time()
-        inputs = {onet_session.get_inputs()[0].name: form_input(img)}
-        outs = onet_session.run(None, inputs)
-
-        time_t += time.time() - t_s
-    print(time_t / 20)
-    seg = outs[0]
-
-    palette = get_palette()
-    color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
-    for label, color in enumerate(palette):
-        color_seg[seg == label, :] = color
-    # convert to BGR
-    color_seg = color_seg[..., ::-1]
-
-    img = img * 0.2 + color_seg * 0.8
-    img = img.astype(np.uint8)
-    cv2.imwrite('output_segmentation_onnx.png', img)
+if __name__ == '__main__':
+    main()
