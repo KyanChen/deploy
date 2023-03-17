@@ -29,7 +29,7 @@ onet_session = onnxruntime.InferenceSession(o_model_path)
 img = cv2.imread(img_file)
 
 time_t = 0
-for i in range(20):
+for i in range(5):
     t_s = time.time()
     inputs = {onet_session.get_inputs()[0].name: form_input(img)}
     outs = onet_session.run(None, inputs)
@@ -37,7 +37,8 @@ for i in range(20):
     time_t += time.time() - t_s
 print(time_t / 20)
 seg = outs[0]
-
+import pdb
+pdb.set_trace()
 palette = get_palette()
 color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
 for label, color in enumerate(palette):
