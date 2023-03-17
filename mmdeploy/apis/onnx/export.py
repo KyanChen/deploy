@@ -129,7 +129,9 @@ def export(model: torch.nn.Module,
             opset_version=opset_version,
             dynamic_axes=dynamic_axes,
             keep_initializers_as_inputs=keep_initializers_as_inputs,
-            verbose=verbose)
+            verbose=verbose,
+            # legacy_plugins=True
+        )
 
         if input_metas is not None:
             model.forward = model_forward

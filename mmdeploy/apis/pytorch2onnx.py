@@ -108,4 +108,5 @@ def torch2onnx(img: Any,
             dynamic_axes=dynamic_axes,
             verbose=verbose,
             keep_initializers_as_inputs=keep_initializers_as_inputs,
-            optimize=optimize)
+            optimize=optimize,
+        )
