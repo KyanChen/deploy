@@ -36,7 +36,7 @@ def parse_args():
         help='image used to test model')
     parser.add_argument(
         '--work-dir',
-        default='results/deploy',
+        default='results/onnxdeploy',
         help='the dir to save logs and models')
     parser.add_argument(
         '--calib-dataset-cfg',
@@ -56,7 +56,7 @@ def parse_args():
         '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
         '--quant-image-dir',
-        default='results/deploy',
+        default='results/onnxdeploy',
         help='Image directory for quantize model.')
     parser.add_argument(
         '--quant', action='store_true', help='Quantize model to low bit.')
