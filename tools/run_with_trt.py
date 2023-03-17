@@ -24,31 +24,6 @@ def get_palette(num_classes=3):
 model_path = "E:/project/Template_detection/pytorch_net/test_model.onnx"
 img_file = 'test_cloud_img.jpg'
 
-onet_session = onnxruntime.InferenceSession(o_model_path)
-
-img = cv2.imread(img_file)
-
-time_t = 0
-for i in range(20):
-    t_s = time.time()
-    inputs = {onet_session.get_inputs()[0].name: form_input(img)}
-    outs = onet_session.run(None, inputs)
-
-    time_t += time.time() - t_s
-print(time_t / 20)
-seg = outs[0]
-
-palette = get_palette()
-color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
-for label, color in enumerate(palette):
-    color_seg[seg == label, :] = color
-# convert to BGR
-color_seg = color_seg[..., ::-1]
-
-img = img * 0.2 + color_seg * 0.8
-img = img.astype(np.uint8)
-cv2.imwrite('output_segmentation_onnx.png', img)
-
 
 import tensorrt as trt
 logger = trt.Logger(trt.Logger.WARNING)
@@ -119,3 +94,28 @@ def main(input, trt_file):
     pdb.set_trace()
 
 
+
+    onet_session = onnxruntime.InferenceSession(o_model_path)
+
+    img = cv2.imread(img_file)
+
+    time_t = 0
+    for i in range(20):
+        t_s = time.time()
+        inputs = {onet_session.get_inputs()[0].name: form_input(img)}
+        outs = onet_session.run(None, inputs)
+
+        time_t += time.time() - t_s
+    print(time_t / 20)
+    seg = outs[0]
+
+    palette = get_palette()
+    color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
+    for label, color in enumerate(palette):
+        color_seg[seg == label, :] = color
+    # convert to BGR
+    color_seg = color_seg[..., ::-1]
+
+    img = img * 0.2 + color_seg * 0.8
+    img = img.astype(np.uint8)
+    cv2.imwrite('output_segmentation_onnx.png', img)
