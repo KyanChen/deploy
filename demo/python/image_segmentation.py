@@ -9,7 +9,7 @@ from mmdeploy_python import Segmentor
 def parse_args():
     parser = argparse.ArgumentParser(
         description='show how to use sdk python api')
-    parser.add_argument('device_name', help='name of device, cuda or cpu')
+    parser.add_argument('--device_name', help='name of device, cuda or cpu')
     parser.add_argument(
         'model_path',
         help='path of mmdeploy SDK model dumped by model converter')
