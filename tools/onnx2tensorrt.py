@@ -11,8 +11,8 @@ from mmdeploy.utils import (get_common_config, get_model_inputs,
 def parse_args():
     parser = argparse.ArgumentParser(description='Convert ONNX to TensorRT.')
     parser.add_argument('--deploy_cfg', default='../configs/mmseg/segmentation_tensorrt-fp16_static-512x512.py', help='deploy config path')
-    parser.add_argument('--onnx_path', default='results/deploy/end2end.onnx', help='ONNX model path')
-    parser.add_argument('--output_prefix', default='results/deploy/end2end.trt', help='output TensorRT engine prefix')
+    parser.add_argument('--onnx_path', default='results/onnxdeploy', help='ONNX model path')
+    parser.add_argument('--output_prefix', default='results/onnxdeploy/end2end', help='output TensorRT engine prefix')
     parser.add_argument('--device-id', help='`the CUDA device id', default=0)
     parser.add_argument(
         '--calib-file',
