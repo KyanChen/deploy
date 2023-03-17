@@ -10,10 +10,10 @@ from mmdeploy_python import Segmentor
 def parse_args():
     parser = argparse.ArgumentParser(
         description='show how to use sdk python api')
-    parser.add_argument('--device_name', default='cpu', help='name of device, cuda or cpu')
+    parser.add_argument('--device_name', default='cuda', help='name of device, cuda or cpu')
     parser.add_argument(
         '--model_path',
-        default='results/onnxdeploy',
+        default='results/trtdeployfull',
         help='path of mmdeploy SDK model dumped by model converter')
     parser.add_argument('--image_path', default='test_cloud_img.jpg', help='path of an image')
     args = parser.parse_args()
