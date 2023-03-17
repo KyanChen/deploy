@@ -44,7 +44,7 @@ def parse_args():
               'specified, it will use "val" dataset in model config instead.'),
         default=None)
     parser.add_argument(
-        '--device', help='device used for conversion', default='cuda:0')
+        '--device', help='device used for conversion', default='cpu')
     parser.add_argument(
         '--log-level',
         help='set log level',
