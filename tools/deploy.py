@@ -30,13 +30,13 @@ def parse_args():
     parser.add_argument('--img', default='test_cloud_img.jpg', help='image used to convert model model')
     parser.add_argument(
         '--test-img',
-        default=['test_cloud_img.jpg'],
+        default=None,
         type=str,
         nargs='+',
         help='image used to test model')
     parser.add_argument(
         '--work-dir',
-        default='results/onnxdeploy',
+        default='results/trtdeployfull',
         help='the dir to save logs and models')
     parser.add_argument(
         '--calib-dataset-cfg',
@@ -44,7 +44,7 @@ def parse_args():
               'specified, it will use "val" dataset in model config instead.'),
         default=None)
     parser.add_argument(
-        '--device', help='device used for conversion', default='cpu')
+        '--device', help='device used for conversion', default='cuda')
     parser.add_argument(
         '--log-level',
         help='set log level',
@@ -56,7 +56,7 @@ def parse_args():
         '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
         '--quant-image-dir',
-        default='results/onnxdeploy',
+        default='results/trtdeployfull',
         help='Image directory for quantize model.')
     parser.add_argument(
         '--quant', action='store_true', help='Quantize model to low bit.')
