@@ -56,7 +56,7 @@ def parse_args():
         '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
         '--quant-image-dir',
-        default=None,
+        default='results/deploy',
         help='Image directory for quantize model.')
     parser.add_argument(
         '--quant', action='store_true', help='Quantize model to low bit.')
