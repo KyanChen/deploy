@@ -9,7 +9,7 @@ def form_input(img):
     img = cv2.resize(img, (512, 512))[:, :, ::-1]
     img = (img - np.array([123.675, 116.28, 103.53])) / np.array([58.395, 57.12, 57.375])
     img = np.transpose(img, axes=(2, 0, 1))
-    img = np.expand_dims(img, axis=0)
+    img = np.expand_dims(img, axis=0).astype(np.float32)
     return img
 
 def get_palette(num_classes=3):
