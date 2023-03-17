@@ -1,6 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import argparse
 import logging
+import sys
+sys.path.append(sys.path[0]+'/..')
 import os
 import os.path as osp
 from functools import partial
@@ -22,19 +24,19 @@ from mmdeploy.utils import (IR, Backend, get_backend, get_calib_filename,
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Export model to backends.')
-    parser.add_argument('deploy_cfg', help='deploy config path')
-    parser.add_argument('model_cfg', help='model config path')
-    parser.add_argument('checkpoint', help='model checkpoint path')
-    parser.add_argument('img', help='image used to convert model model')
+    parser.add_argument('--deploy_cfg', default='../configs/mmseg/segmentation_tensorrt-fp16_static-512x512.py', help='deploy config path')
+    parser.add_argument('--model_cfg', default='../my_config/segformer_mit-b0_512x512_160k_cloud.py', help='model config path')
+    parser.add_argument('--checkpoint', default='../pretrain/cloud_snow.pth',  help='model checkpoint path')
+    parser.add_argument('--img', default='test_cloud_img.jpg', help='image used to convert model model')
     parser.add_argument(
         '--test-img',
-        default=None,
+        default=['test_cloud_img.jpg'],
         type=str,
         nargs='+',
         help='image used to test model')
     parser.add_argument(
         '--work-dir',
-        default=os.getcwd(),
+        default='results/deploy',
         help='the dir to save logs and models')
     parser.add_argument(
         '--calib-dataset-cfg',
@@ -42,16 +44,16 @@ def parse_args():
               'specified, it will use "val" dataset in model config instead.'),
         default=None)
     parser.add_argument(
-        '--device', help='device used for conversion', default='cpu')
+        '--device', help='device used for conversion', default='cuda:0')
     parser.add_argument(
         '--log-level',
         help='set log level',
         default='INFO',
         choices=list(logging._nameToLevel.keys()))
     parser.add_argument(
-        '--show', action='store_true', help='Show detection outputs')
+        '--show', action='store_true', default=True, help='Show detection outputs')
     parser.add_argument(
-        '--dump-info', action='store_true', help='Output information for SDK')
+        '--dump-info', action='store_true', default=True, help='Output information for SDK')
     parser.add_argument(
         '--quant-image-dir',
         default=None,
