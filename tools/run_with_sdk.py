@@ -38,11 +38,11 @@ def main():
     segmentor = Segmentor(
         model_path=args.model_path, device_name=args.device_name, device_id=0)
     time_t = 0
-    for i in range(10):
+    for i in range(5):
         t_s = time.time()
         seg = segmentor(img)
         time_t += time.time() - t_s
-    print(time_t / 10)
+    print(time_t / 5)
 
     if seg.dtype == np.float32:
         seg = np.argmax(seg, axis=0)
