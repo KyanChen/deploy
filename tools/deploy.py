@@ -288,7 +288,9 @@ def main():
         f'visualize {backend.value} model',
         target=visualize_model,
         args=(model_cfg_path, deploy_cfg_path, backend_files, args.test_img,
-              args.device),
+              # args.device,
+              'cpu'
+              ),
         kwargs=extra,
         ret_value=ret_value)
 
