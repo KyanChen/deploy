@@ -6,9 +6,17 @@ import numpy as np
 import pycuda.autoinit
 import pycuda.driver as cuda
 import tensorrt as trt
+import cv2
 
 TRT_LOGGER = trt.Logger(trt.Logger.VERBOSE)
 
+
+def form_input(img):
+    img = cv2.resize(img, (512, 512))[:, :, ::-1]
+    img = (img - np.array([123.675, 116.28, 103.53])) / np.array([58.395, 57.12, 57.375])
+    img = np.transpose(img, axes=(2, 0, 1))
+    img = np.expand_dims(img, axis=0).astype(np.float32)
+    return img
 
 class HostDeviceMem(object):
     def __init__(self, host_mem, device_mem):
@@ -126,12 +134,19 @@ def postprocess_the_outputs(h_outputs, shape_of_output):
     h_outputs = h_outputs.reshape(*shape_of_output)
     return h_outputs
 
+def get_palette():
+    palette = [[0, 0, 0], [0, 0, 255], [0, 255, 0]]
+    return [tuple(c) for c in palette]
+
+
 
 if __name__ == '__main__':
     onnx_file_path = "results/onnxdeployfull/end2end.onnx"
     fp16_mode = False
     max_batch_size = 1
     trt_engine_path = "results/onnxdeployfull/end2end.engine"
+    img_file = 'test_cloud_img.jpg'
+    img = cv2.imread(img_file)
 
     # 1.创建cudaEngine
     engine = build_engine(onnx_file_path, trt_engine_path, max_batch_size, fp16_mode)
@@ -143,6 +158,7 @@ if __name__ == '__main__':
     # 3.推理
     output_shape = (max_batch_size, 1, 512, 512)
     dummy_input = np.ones([1, 3, 512, 512], dtype=np.float32)
+    dummy_input = form_input(img)
     inputs[0].host = dummy_input.reshape(-1)
 
     # # 如果是动态输入，需以下设置
