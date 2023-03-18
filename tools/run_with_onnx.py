@@ -21,7 +21,7 @@ def get_palette(num_classes=3):
     palette = [[0, 0, 0], [0, 0, 255], [0, 255, 0]]
     return [tuple(c) for c in palette]
 
-o_model_path = "results/trtdeployfull/end2end.onnx"
+o_model_path = "results/onnxdeployfull/end2end.onnx"
 img_file = 'test_cloud_img.jpg'
 
 onet_session = onnxruntime.InferenceSession(o_model_path)
