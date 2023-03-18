@@ -144,7 +144,7 @@ if __name__ == '__main__':
     onnx_file_path = "results/onnxdeployfull/end2end.onnx"
     fp16_mode = False
     max_batch_size = 1
-    trt_engine_path = "results/onnxdeployfull/end2end.engine"
+    trt_engine_path = "results/onnxdeployfull/end2end_fp32.engine"
     img_file = 'test_cloud_img.jpg'
     img = cv2.imread(img_file)
 
@@ -164,9 +164,12 @@ if __name__ == '__main__':
     # # 如果是动态输入，需以下设置
     # context.set_binding_shape(0, dummy_input.shape)
 
-    t1 = time.time()
-    trt_outputs = inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
-    t2 = time.time()
+    time_t = 0
+    max_try = 10
+    for _ in range(max_try):
+        t_s = time.time()
+        trt_outputs = inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
+        time_t += time.time() - t_s
     # 由于tensorrt输出为一维向量，需要reshape到指定尺寸
     feat = postprocess_the_outputs(trt_outputs[0], output_shape)
 
@@ -192,6 +195,6 @@ if __name__ == '__main__':
     # feat_2 = feat_2.cpu().data.numpy()
     # mse = np.mean((feat - feat_2) ** 2)
 
-    print("TensorRT engine time cost: {}".format(t2 - t1))
+    print("TensorRT engine time cost: {}".format(time_t/max_try))
     # print("PyTorch model time cost: {}".format(t4 - t3))
     # print('MSE Error = {}'.format(mse))
