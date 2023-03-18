@@ -165,7 +165,7 @@ if __name__ == '__main__':
     # context.set_binding_shape(0, dummy_input.shape)
 
     time_t = 0
-    max_try = 10
+    max_try = 100
     for _ in range(max_try):
         t_s = time.time()
         trt_outputs = inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)
