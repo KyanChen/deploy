@@ -131,7 +131,7 @@ if __name__ == '__main__':
     onnx_file_path = "results/onnxdeployfull/end2end.onnx"
     fp16_mode = False
     max_batch_size = 1
-    trt_engine_path = "results/onnxdeployfull/end2end.trt"
+    trt_engine_path = "results/onnxdeployfull/end2end.engine"
 
     # 1.创建cudaEngine
     engine = build_engine(onnx_file_path, trt_engine_path, max_batch_size, fp16_mode)
