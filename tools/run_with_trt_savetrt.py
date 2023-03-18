@@ -139,7 +139,6 @@ def get_palette():
     return [tuple(c) for c in palette]
 
 
-
 if __name__ == '__main__':
     onnx_file_path = "results/onnxdeployfull/end2end.onnx"
     fp16_mode = False
