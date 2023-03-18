@@ -169,7 +169,8 @@ if __name__ == '__main__':
     t2 = time.time()
     # 由于tensorrt输出为一维向量，需要reshape到指定尺寸
     feat = postprocess_the_outputs(trt_outputs[0], output_shape)
-
+    import pdb
+    pdb.set_trace()
     # # 4.速度对比
     # model = torchvision.models.resnet50(pretrained=True).cuda()
     # model = model.eval()
