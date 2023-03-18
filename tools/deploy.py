@@ -36,7 +36,7 @@ def parse_args():
         help='image used to test model')
     parser.add_argument(
         '--work-dir',
-        default='results/trtdeployfull',
+        default='results/onnxdeployfull',
         help='the dir to save logs and models')
     parser.add_argument(
         '--calib-dataset-cfg',
