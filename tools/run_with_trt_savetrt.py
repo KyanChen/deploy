@@ -169,8 +169,19 @@ if __name__ == '__main__':
     t2 = time.time()
     # 由于tensorrt输出为一维向量，需要reshape到指定尺寸
     feat = postprocess_the_outputs(trt_outputs[0], output_shape)
-    import pdb
-    pdb.set_trace()
+
+    seg = feat[0][0]
+    palette = get_palette()
+    color_seg = np.zeros((512, 512, 3), dtype=np.uint8)
+    for label, color in enumerate(palette):
+        color_seg[seg == label, :] = color
+    # convert to BGR
+    color_seg = color_seg[..., ::-1]
+    img = cv2.resize(img, (512, 512))
+    img = img * 0.2 + color_seg * 0.8
+    img = img.astype(np.uint8)
+    cv2.imwrite('output_segmentation_trt.png', img)
+
     # # 4.速度对比
     # model = torchvision.models.resnet50(pretrained=True).cuda()
     # model = model.eval()
