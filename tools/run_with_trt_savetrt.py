@@ -144,7 +144,7 @@ if __name__ == '__main__':
     onnx_file_path = "results/onnxdeployfull/end2end.onnx"
     fp16_mode = False
     max_batch_size = 1
-    trt_engine_path = "results/onnxdeployfull/end2end_fp32.engine"
+    trt_engine_path = "results/onnxdeployfull/end2end_fp16.engine"
     img_file = 'test_cloud_img.jpg'
     img = cv2.imread(img_file)
 
